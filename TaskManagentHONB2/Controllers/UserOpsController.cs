@@ -1,8 +1,5 @@
 ﻿using DAL.Interfaces;
-using DAL.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
 using TaskManagentHONB2.Models;
 
 namespace TaskManagentHONB2.Controllers
@@ -61,7 +58,7 @@ namespace TaskManagentHONB2.Controllers
             if (ModelState.IsValid)
             {
                 bool isValidUser = _iuser.ValidateUser(obj.Email, obj.Password);
-                int? myusers = await _iuser.GetUserIDByEmail(obj.Email);
+                int? myusers = await _iuser.GetUserIDByEmail(obj.Email);  // user id
                 int userId = myusers.Value;
                 if (obj.Email == "admin@yahoo.com" && obj.Password == "admin")
                 {
@@ -71,7 +68,9 @@ namespace TaskManagentHONB2.Controllers
                 {
                     if (isValidUser)
                     {
-                        HttpContext.Session.SetString("UserID", userId.ToString());
+                        HttpContext.Session.SetInt32("UserID", userId);
+
+
                         return RedirectToAction("UserHomePage");
                     }
                     else
@@ -102,10 +101,13 @@ namespace TaskManagentHONB2.Controllers
 
         public async Task<IActionResult> TaskList()
         {
-            int AssignedUserId = Convert.ToInt32(HttpContext.Session.GetString("UserID"));
-            var users = await _iuser.GetAllUsersTaskByID(AssignedUserId);
+            int? AssignedUserId = HttpContext.Session.GetInt32("UserID");
+            if (AssignedUserId == null)
+            {
+                return View();
+            }
+            var users = await _iuser.GetAllUsersTaskByID(AssignedUserId.Value);
             return View(users);
         }
     }
-
 }
