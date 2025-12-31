@@ -11,5 +11,9 @@ namespace DAL.Interfaces
     {
         Task CreateUser(User user);
 
+        bool ValidateUser(string Email , string Password);
+
+        Task<List<User>> GetAllUsers();  // is for Dropdown
+
     }
 }

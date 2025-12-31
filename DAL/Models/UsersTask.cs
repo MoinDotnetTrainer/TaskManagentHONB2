@@ -12,11 +12,11 @@ namespace DAL.Models
     {
         [Key]
         public int TaskId { get; set; }
-        public string? Title { get; set; }
-        public string? Description { get; set; }
-        public DateTime? DueDate { get; set; }
-        public string? Status { get; set; }
-        public int AssignedUserId { get; set; }  // fk
+        public string? Title { get; set; }  // UI
+        public string? Description { get; set; }  // Design Login Page
+        public DateTime? DueDate { get; set; }  // tomorrow
+        public string? Status { get; set; }  // assigned
+        public int AssignedUserId { get; set; }  // fk to User 1 or 2 or 3 or 4
         public User? AssignedUser { get; set; }
 
     }

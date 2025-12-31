@@ -17,7 +17,8 @@ namespace TaskManagentHONB2
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
             });
 
-            builder.Services.AddScoped<DAL.Interfaces.IUsers, DAL.Repos.UsersRepo>();   
+            builder.Services.AddScoped<DAL.Interfaces.IUsers, DAL.Repos.UsersRepo>();
+            builder.Services.AddScoped<DAL.Interfaces.ITask, DAL.Repos.Tasksrepo>();
 
 
             var app = builder.Build();
@@ -39,7 +40,7 @@ namespace TaskManagentHONB2
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
+                pattern: "{controller=UserOps}/{action=Login}/{id?}");
 
             app.Run();
         }
