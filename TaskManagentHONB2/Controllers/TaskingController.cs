@@ -20,7 +20,6 @@ namespace TaskManagentHONB2.Controllers
         [HttpGet]
         public async Task<IActionResult> AddTask()
         {
-
             //on load get list of users from db and send to viewbag
             ViewBag.userlist = new SelectList(await _user.GetAllUsers(), "UserId", "Username"); // getting id ,username ,email , password
             //                                              from all Users data , Userid and username , username id for UI and Userid is for backend    
@@ -41,10 +40,10 @@ namespace TaskManagentHONB2.Controllers
 
 
         [HttpGet]
-        public IActionResult TaskList()
+        public async Task<IActionResult> TaskList()
         {
-
-            return View();
+            var tasks = await _task.GetAllTasks();
+            return View(tasks);
         }
     }
 }

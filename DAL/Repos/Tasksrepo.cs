@@ -1,5 +1,6 @@
 ﻿using DAL.Interfaces;
 using DAL.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,6 +20,14 @@ namespace DAL.Repos
         {
             await _appdb.UsersTasks.AddAsync(task);
             await _appdb.SaveChangesAsync();
+        }
+        public async Task<List<Models.UsersTask>> GetAllTasks()
+        {
+           // var tasks = await _appdb.UsersTasks.ToListAsync();
+            var tasks = await _appdb.UsersTasks
+       .Include(t => t.AssignedUser)   // FK → PK
+       .ToListAsync();
+            return tasks;
         }
     }
 }

@@ -34,8 +34,21 @@ namespace DAL.Repos
 
         public async Task<List<Models.User>> GetAllUsers()
         {
-            var users = await _appdb.Users.ToListAsync();   
+            var users = await _appdb.Users.ToListAsync();
             return users;
+        }
+        public async Task<List<UsersTask>> GetAllUsersTaskByID(int AssignedUserId)
+        {
+            var userTasks = await _appdb.UsersTasks.Where(x => x.AssignedUserId == AssignedUserId).ToListAsync();
+            return userTasks;
+        }
+
+        public async Task<int?> GetUserIDByEmail(string email)
+        {
+            return await _appdb.Users
+                .Where(u => u.Email == email)
+                .Select(u => u.UserId)
+                .FirstOrDefaultAsync();
         }
     }
 }

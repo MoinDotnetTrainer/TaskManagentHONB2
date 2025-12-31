@@ -15,5 +15,9 @@ namespace DAL.Interfaces
 
         Task<List<User>> GetAllUsers();  // is for Dropdown
 
+        Task<List<UsersTask>> GetAllUsersTaskByID(int UserId);
+
+        Task<int?> GetUserIDByEmail(string EmailID);
+
     }
 }

@@ -17,7 +17,7 @@ namespace DAL.Models
         public DateTime? DueDate { get; set; }  // tomorrow
         public string? Status { get; set; }  // assigned
         public int AssignedUserId { get; set; }  // fk to User 1 or 2 or 3 or 4
-        public User? AssignedUser { get; set; }
+        public User? AssignedUser { get; set; }  // navigation property
 
     }
 }

@@ -17,6 +17,12 @@ namespace TaskManagentHONB2
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
             });
 
+            builder.Services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(30);
+                options.Cookie.IsEssential = true;
+            });
+
             builder.Services.AddScoped<DAL.Interfaces.IUsers, DAL.Repos.UsersRepo>();
             builder.Services.AddScoped<DAL.Interfaces.ITask, DAL.Repos.Tasksrepo>();
 
@@ -32,6 +38,7 @@ namespace TaskManagentHONB2
             }
 
             app.UseHttpsRedirection();
+            app.UseSession();
             app.UseStaticFiles();
 
             app.UseRouting();

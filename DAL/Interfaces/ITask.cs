@@ -9,6 +9,9 @@ namespace DAL.Interfaces
     public interface ITask
     {
         Task CreateTask(Models.UsersTask task);
+        Task<List<Models.UsersTask>> GetAllTasks();
+
+
         //Task<List<Models.UsersTask>> GetTasksByUserId(int userId);
         //Task<Models.UsersTask> GetTaskById(int taskId);
         //Task UpdateTask(Models.UsersTask task);
