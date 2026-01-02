@@ -38,12 +38,36 @@ namespace DAL.Repos
             return userTasks;
         }
 
-        public async Task<int?> GetUserIDByEmail(string email)
+        public async Task<int> GetUserIDByEmail(string email)
         {
             return await _appdb.Users
                 .Where(u => u.Email == email)
                 .Select(u => u.UserId)
                 .FirstOrDefaultAsync();
         }
+
+
+        public async Task<UsersTask> GetTaskByTaskID(int TaskId)
+        {
+            var task = await _appdb.UsersTasks.FirstOrDefaultAsync(x => x.TaskId == TaskId);
+            return task;
+        }
+        public async Task UpdateStatusAsync(int TaskId, string Status)
+        {
+            var task = new UsersTask
+            {
+                TaskId = TaskId,
+                Status = Status
+            };
+
+            _appdb.UsersTasks.Attach(task);
+
+            _appdb.Entry(task).Property(x => x.Status).IsModified = true;
+
+            await _appdb.SaveChangesAsync();
+        }
+
+        
+
     }
 }

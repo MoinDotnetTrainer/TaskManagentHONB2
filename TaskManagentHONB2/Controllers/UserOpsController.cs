@@ -1,4 +1,6 @@
 ﻿using DAL.Interfaces;
+using DAL.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TaskManagentHONB2.Models;
 
@@ -58,8 +60,7 @@ namespace TaskManagentHONB2.Controllers
             if (ModelState.IsValid)
             {
                 bool isValidUser = _iuser.ValidateUser(obj.Email, obj.Password);
-                int? myusers = await _iuser.GetUserIDByEmail(obj.Email);  // user id
-                int userId = myusers.Value;
+                int myusers = await _iuser.GetUserIDByEmail(obj.Email);  // user id ,6
                 if (obj.Email == "admin@yahoo.com" && obj.Password == "admin")
                 {
                     return RedirectToAction("AdminHomePage");
@@ -68,7 +69,7 @@ namespace TaskManagentHONB2.Controllers
                 {
                     if (isValidUser)
                     {
-                        HttpContext.Session.SetInt32("UserID", userId);
+                        HttpContext.Session.SetInt32("UserID", myusers);
 
 
                         return RedirectToAction("UserHomePage");
@@ -109,5 +110,19 @@ namespace TaskManagentHONB2.Controllers
             var users = await _iuser.GetAllUsersTaskByID(AssignedUserId.Value);
             return View(users);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> UpdateStatus(int TaskId)
+        {
+            return View(await _iuser.GetTaskByTaskID(TaskId));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateStatus(UsersTask obj)
+        {
+            await _iuser.UpdateStatusAsync(obj.TaskId, obj.Status);
+            return RedirectToAction("TaskList");
+        }
+
     }
 }

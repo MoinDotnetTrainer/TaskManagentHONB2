@@ -11,6 +11,8 @@ namespace DAL.Interfaces
         Task CreateTask(Models.UsersTask task);
         Task<List<Models.UsersTask>> GetAllTasks();
 
+        List<Models.UsersTask> GetAllTasksByStatus(string Status);
+     
 
         //Task<List<Models.UsersTask>> GetTasksByUserId(int userId);
         //Task<Models.UsersTask> GetTaskById(int taskId);

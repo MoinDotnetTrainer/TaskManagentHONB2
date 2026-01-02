@@ -1,0 +1,74 @@
+﻿@model TaskManagentHONB2.Models.StatusModel
+
+
+@{
+    ViewData["Title"] = "GetTaskByStatus";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>GetTaskByStatus</h1>
+
+
+<form method="post">
+    <select  asp-for="Status">
+        <option value="">-- Select Status --</option>
+        <option value="Assigned">Assigned</option>
+        <option value="Pending">Pending</option>
+        <option value="In Progress">In Progress</option>
+        <option value="Completed">Completed</option>
+    </select>
+
+    <input type="submit" name="submit" value="submit" />
+</form>
+
+
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Title
+                </th>
+                <th>
+                    Description
+                </th>
+                <th>
+                    DueDate
+                </th>
+                <th>
+                    Status
+                </th>
+                <th>
+                    AssignedUser
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in ViewBag.res)
+            {
+                <tr>
+                    <td>
+                        @item.Title
+                    </td>
+                    <td>
+                        @item.Description
+                    </td>
+                    <td>
+                        @item.DueDate
+                    </td>
+                    <td>
+                        @item.Status
+                    </td>
+                    <td>
+                        @item.AssignedUser.Username
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.TaskId">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.TaskId">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.TaskId">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>

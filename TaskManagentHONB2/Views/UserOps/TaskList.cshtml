@@ -6,7 +6,14 @@
 }
 
 <h1>TaskList</h1>
+<style>
 
+    .disabled-link {
+        pointer-events: none;
+        color: gray;
+        text-decoration: none;
+        cursor: not-allowed;
+    }</style>
 <p>
     <a asp-action="Create">Create New</a>
 </p>
@@ -25,32 +32,41 @@
             <th>
                 @Html.DisplayNameFor(model => model.Status)
             </th>
-            
+
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DueDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Status)
-            </td>
-           
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.TaskId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.TaskId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.TaskId">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DueDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Status)
+                </td>
+
+
+
+                <td>
+                    <a asp-action="UpdateStatus"
+                       asp-route-TaskId="@item.TaskId"
+                       class="@(item.Status == "Completed" ? "disabled-link" : "")">
+                        Edit
+                    </a>|
+                   
+                    <a asp-action="Details" asp-route-id="@item.TaskId">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.TaskId">Delete</a>
+                </td>
+
+            </tr>
+        }
     </tbody>
 </table>

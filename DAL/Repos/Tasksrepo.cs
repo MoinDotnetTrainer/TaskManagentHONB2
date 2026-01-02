@@ -23,11 +23,16 @@ namespace DAL.Repos
         }
         public async Task<List<Models.UsersTask>> GetAllTasks()
         {
-           // var tasks = await _appdb.UsersTasks.ToListAsync();
+            // var tasks = await _appdb.UsersTasks.ToListAsync();
             var tasks = await _appdb.UsersTasks
        .Include(t => t.AssignedUser)   // FK → PK
        .ToListAsync();
             return tasks;
+        }
+
+        public List<UsersTask> GetAllTasksByStatus(string Status)
+        {
+            return (from s in _appdb.UsersTasks.Include(t => t.AssignedUser) where s.Status == Status select s).ToList();
         }
     }
 }

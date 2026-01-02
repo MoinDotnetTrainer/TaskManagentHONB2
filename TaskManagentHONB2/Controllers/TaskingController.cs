@@ -27,8 +27,8 @@ namespace TaskManagentHONB2.Controllers
         }
 
 
-        [HttpPost]
-        public IActionResult AddTask(UsersTask obj)
+        [HttpPost, ActionName("AddTask")]
+        public IActionResult Ajhjhgjgj(UsersTask obj)
         {
             if (ModelState.IsValid)
             {
@@ -44,6 +44,20 @@ namespace TaskManagentHONB2.Controllers
         {
             var tasks = await _task.GetAllTasks();
             return View(tasks);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetTaskByStatus()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult GetTaskByStatus(StatusModel obj)
+        {
+            //  string Status = Request.Form["status"].ToString();
+            ViewBag.res = _task.GetAllTasksByStatus(obj.Status);
+            return View();
         }
     }
 }
